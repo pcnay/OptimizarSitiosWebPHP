@@ -17,8 +17,8 @@
       <a href="#" id="insertar">Insertar</a>
 
     </header>
-    </section id = "contenido">
-      <p>Aca va el contenido.</p>
+    <section id="contenido">
+      <p>En esta parte se encontrara la tabla donde se desplegara la informacion.</p>
     </section>
     <script src="js/super-heroes.js"></script>
   </body>

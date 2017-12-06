@@ -1,0 +1,36 @@
+@import url("normalize.css");
+body,html
+{
+  background:#EEE;
+  font-family:Helvetica, Arial;
+  font-size:16px;
+  text-align:center; /* Centrando toda la página. */
+}
+
+img
+{
+  max-width:100%;
+}
+
+#cabecera, #contenido
+{
+  display: inline-block; /* Para que compartan espacio */
+  vertical-align: top; /* Se alinean en la parte de arriba */
+  width: 15%;
+}
+#contenido
+{
+  background:rgb(204, 11, 11);
+  width: 80%;
+}
+
+/* Aplicando estilos al boton "insertar" */
+#insertar
+{
+  color:#292623;
+  font-size:1.5em;
+}
+#insertar:hover
+{
+  color:#EC673A;
+}
