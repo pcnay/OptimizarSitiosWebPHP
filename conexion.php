@@ -36,16 +36,19 @@ function conexionMySQL()
     // Funciones para imprimir formatos de PHP.
     // http://www.php.net/manual/es/function.printf.php
     // http://www.php.net/manual/es/function.sprintf.php
-    $formato = "<div class 'mensaje'>Conexion exitosa <b>%s</b></div>";
-    printf($formato,$conexion->host_info);
+    // $formato = "<div class 'mensaje'>Conexion exitosa <b>%s</b></div>";
+    // printf($formato,$conexion->host_info);
 
   }
 
   // Para desplegar acentos, ñ, Ñ, 
   $conexion->query("SET CHARACTER SET UTF8");
 
+  return $conexion;
+
 }
 
-conexionMySQL();
+
+// conexionMySQL();
 
 ?>
