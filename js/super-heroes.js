@@ -29,14 +29,22 @@ function enviarDatos()
     // Ahora compara el estado del HTTP.
     if (ajax.status == 200)
     {
-      alert ("WIIIIIII");
-      console.log(ajax);
+      // alert ("WIIIIIII");
+      precarga.innerHTML = null; // Para que desaparezca el "loader.gif".
+      precarga.style.display = "none"; // Desaparezca el "DIV" del "loder.gif"
+      // Ahora es indicar al DIV de respuesta que se encuentra en el archivo "index.php"
+      // que se muestre el DIV y se le asigna el la "form" que se creo en el Ajax.
+      respuesta.style.display = "block"; // Que se vea el "DIV" respuesta.
+      // Asigna el valor retornado por AJAX, es decir lo que retorna la funcion "capturaHeroe"
+      // del archivo "vistas.php"
+      respuesta.innerHTML = ajax.responseText; 
     }
     else
     {
-      alert ("NOOOOOOOOOOOOOOOO");
-      console.log(ajax);
+      // "\n" porque en Alert no se puede agregar código HTML
+      alert ("El servidor No contesto \n Error "+ajax.status+": "+ajax.statusText);      
     }
+    // console.log(ajax);
   }
 }
 

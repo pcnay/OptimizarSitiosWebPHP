@@ -10,7 +10,76 @@
   3.- Ejecutar la Consulta : $resultado=$mysql->query($sql)
   4.- Mostrar Resultados : $fila = $resultado->fetch_assoc
 
-  */
+*/
+  
+  function listaEditoriales()
+  {  
+    $mysql = conexionMySQL();
+    $sql = "SELECT * FROM editorial";
+    $resultado = $mysql->query($sql);
+
+    //Obtendra la lista de las editoriales en la etiqueta "Select"
+    $lista = "<select id='editorial' name = 'editorial_slc' required>";
+    $lista .= "<option value=''>- - -</option>";
+    // Traer los datos de la tabla de editoriales, llamandolos por su nombre de campo.
+    while ($fila = $resultado->fetch_assoc())
+    { 
+      // $lista .= "<option value = '".$fila["id_editorial"]."'>".$fila["editorial"]."</option>"; 
+      // Otra forma de hacerlo.
+      // Este comenado lo convierte a formato de cadena para seguir la concatenacion.
+      $lista .= sprintf("<option value = '%d'>%s</option>",$fila["id_editorial"],$fila["editorial"]);
+    }
+    $lista .= "</select>";
+    
+    $resultado->free();
+    $mysql->close();
+
+    // No se requiere con "printf" ya que esta formateada con el Formulario y esta si retorna
+    // formateada la cadena.
+    return $lista;
+  }
+
+  // Se inicia la captura para registrarlo en la Tabla de "super_heroes" de la Base De Datos
+  function capturaHeroe()
+  {
+    // Se crea de forma dinámica el "formulario HTML" de la captura del Super Heroe.
+    // Se agrega "data-insertar"; es un atributo de HTML, se debe anteponer la palabra "data"
+    $form = "<form id = 'alta-heroe' class = 'formulario' data-insertar>";
+      $form .= "<fieldset>";
+        $form .= "<legend>Alta De Super Héroes : </legend>";
+        $form .= "<div>";
+          $form .= "<label for = 'nombre'>Nombre:</label>";
+          // name = es para el backend es como lo renoce, en javascript es id para desencadenar prog.
+          $form .= "<input type='text' id = 'nombre' name = 'nombre_txt' required />";
+        $form .= "</div>";  
+        $form .= "<div>";
+          $form .= "<label for = 'imagen'>Imagen:</label>";
+          $form .= "<input type='text' id = 'imagen' name = 'imagen_txt' required />";
+        $form .= "</div>";  
+        $form .= "<div>";
+          $form .= "<label for = 'descripcion'>Descripcion:</label>";
+          $form .= "<textarea id = 'descripcion' name = 'descripcion_txa' required ></textarea>";
+        $form .= "</div>";  
+        $form .= "<div>"; 
+          $form .= "<label for = 'editorial'>Editorial:</label>";
+          $form .= listaEditoriales();
+        $form .= "</div>";  
+        $form .= "<div>";
+          
+          
+          // Este se envia al controlador, para ejecutar la instruccion .
+          $form .= "<input type='submit' id='insertar-btn' name = 'insertar_btn' value= 'Insertar' />";  
+          // El usuario no ve en la interfaz formulario., se envian parametro oculto al Backend PHP
+          // value = 'insertar' se envia al Controlador, cuando el usuario oprime el boton Insertar
+          // y ejecuta lo definido en la condicional "insertar".
+          $form .= "<input type='hidden' id='transaccion' name = 'transaccion' value= 'insertar' />";                  
+        $form .= "</div>";  
+      $form .= "</fieldset>";
+    $form .= "</form>";
+    
+    // Al retornar lo va a desplegar en pantalla.
+    return printf($form);
+  }
   // Extraer las editoriales dependiendo del "id" editorial.
   function catalogoEditoriales()
   {

@@ -18,6 +18,15 @@ img
   vertical-align: top; /* Se alinean en la parte de arriba */
   width: 15%;
 }
+
+/*
+#cabecera, #contenido, #precarga, #respuesta, .tabla td, tabla th
+{
+  padding:1em;
+}
+*/
+
+
 #contenido
 {
   background:white;
@@ -45,4 +54,73 @@ img
 .exito
 {
   background:green;
+}
+
+#precarga, #respuesta 
+{
+  display:none;
+}
+
+/* Definiendo los estilos del formulario para la inserción de registros. */ 
+
+
+.formulario, .tabla p
+{
+  text-align:left;
+}
+
+.formulario div
+{
+  margin: 1em auto;
+}
+
+.formulario legend
+{
+  font-size:2em;
+  font-weight:bold;
+}
+
+
+.tabla
+{
+  margin:auto;
+  width:90%;
+}
+
+
+.tabla a
+{
+  color:#EEE; 
+}
+
+.tabla a:hover
+{
+  color:#292623;
+}
+
+.tabla img
+{
+  max-width:200px;
+}
+
+.tabla td
+{
+  vertical-align:top;
+}
+
+/* Encabezados de la s tablas */
+.tabla th
+{
+  background:#292623; /*Color Negro */
+  color:#EEE;  /* Color Blanco */
+}
+
+.tabla tr:nth-child(odd)
+{
+  background:#EC673A;
+}
+
+.tabla tr:nth-child(even)
+{
+  background:#1C5F81;
 }
