@@ -14,8 +14,44 @@ var respuesta = document.querySelector("#respuesta");
 
 // DECLARACION DE FUNCIONES
 
+
 // En esta funcion se inicia a trabajar con la lógica de la aplicación.
 // Se ejecutaran las operaciones CRUD,
+
+function insertarHeroe(evento)
+{
+  evento.preventDefault();
+  // alert("Procesa Formulario ");
+  
+  // Se obtiene la información del formulario de captura.
+  // Para obtener las etiquetas hijos del formulario, se utiliza el parámetro "evento"
+  // dado que este es generado por el "addEventListener" y evento "submit"
+  //console.log(evento);
+  // Si se inspecciona el objeto, en el apartado "target" se mostrara las etiquetas hijos
+  // "Form", que este caso es "evento.target" que es el evento que lo origino. 
+  //console.log(evento.target); // El evento que origina el objeto "Form"
+  //console.log(evento.target.length); // Las etiquetas hijos del "Form "
+  //console.log(evento.target[0]); // Muestra la primer etiqueta hija del formulario.
+// Ahora se obtendra la etiqueta y valor de los componentes hijos de "form".
+// Que esta información se obtuvo de "evento.target->target".
+
+    var nombre = new Array();
+    var valor = new Array();
+    var datos = "";
+    var hijosForm = evento.target;
+
+    // Se omite la etiqueta "field", por lo que se comienza en 1.
+    for (var i=1;i<hijosForm.length;i++)
+    {
+      nombre[i] = hijosForm[i].name; // Solo se obtiene el atibuto "name" de la etiqueta.
+      valor[i] = hijosForm[i].value; // Solo se obtiene el "valor" de la etiqueta.
+      datos += nombre[i]+"="+valor[i]+"&";
+      //console.log(datos);
+    }
+
+  ejecutarAJAX(datos);
+}
+
 function enviarDatos()
 {
   precarga.style.display = "block"; // Oculta.
@@ -37,7 +73,28 @@ function enviarDatos()
       respuesta.style.display = "block"; // Que se vea el "DIV" respuesta.
       // Asigna el valor retornado por AJAX, es decir lo que retorna la funcion "capturaHeroe"
       // del archivo "vistas.php"
-      respuesta.innerHTML = ajax.responseText; 
+      respuesta.innerHTML = ajax.responseText; // Desplega la tabla.
+
+      
+      // Se inicia con la definicion de las funciones CRUD  
+      // Se inicia con la insercion del los super heroes a la tabla de la Base de datos.
+      // indexOf() = Si se encuentra en la cadena de "responseText", si no lo encuentra retorna -1
+      if (ajax.responseText.indexOf("data-insertar")>-1)      
+      {
+        // Es el nombre del formulario de captura. Para agregar la funcion de "submit" que
+        // tiene por defecto los formularios cuando se oprimen el boton de "submit", pero
+        // en esta ocacion se agrega a través de JavaScript.
+        document.querySelector("#alta-heroe").addEventListener("submit",insertarHeroe);
+      }
+      // Una vez que haya insertado el registro
+      // Tendrá que desplegar el mensaje esperar unos segundos y recarga la página.
+      // Se tiene otra respuesta ya que se ejecuta de nuevo la funcion "ejecutarAJAX" 
+      if (ajax.responseText.indexOf("data-recargar")>-1)
+      {
+       // Espera 3 segundos antes de recargar la página.
+        setTimeout(function(){window.location.reload()},3000);
+      } 
+
     }
     else
     {

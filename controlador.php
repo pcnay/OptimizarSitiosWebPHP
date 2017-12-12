@@ -32,6 +32,14 @@
     else if ($transaccion == "insertar")
     {
       // Procesar los datos del formulario de Alta e insertarlos en MySQL
+      // La variable del Input "hidden" de vistas.php se utilizo para esta condicion.
+      // Esta funcion se define en "modelo.php".
+      insertarHeroe(
+        $_POST["nombre_txt"],
+        $_POST["imagen_txt"],
+        $_POST["descripcion_txa"],
+        $_POST["editorial_slc"]
+      );
     }
     else if ($transaccion == "eliminar")
     {

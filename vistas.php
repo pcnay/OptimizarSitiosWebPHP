@@ -71,7 +71,8 @@
           $form .= "<input type='submit' id='insertar-btn' name = 'insertar_btn' value= 'Insertar' />";  
           // El usuario no ve en la interfaz formulario., se envian parametro oculto al Backend PHP
           // value = 'insertar' se envia al Controlador, cuando el usuario oprime el boton Insertar
-          // y ejecuta lo definido en la condicional "insertar".
+          // y ejecuta lo definido en la condicional "insertar". Se manda al controlador para que 
+          // indique que accion tomar en este caso "transaccion=insertar"
           $form .= "<input type='hidden' id='transaccion' name = 'transaccion' value= 'insertar' />";                  
         $form .= "</div>";  
       $form .= "</fieldset>";
