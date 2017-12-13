@@ -62,7 +62,7 @@
         $form .= "</div>";  
         $form .= "<div>"; 
           $form .= "<label for = 'editorial'>Editorial:</label>";
-          $form .= listaEditoriales();
+          $form .= listaEditoriales(); // Se asigna el ComboBox(etiqueta Select).
         $form .= "</div>";  
         $form .= "<div>";
           
@@ -94,6 +94,7 @@
       while($fila = $resultado->fetch_assoc())
       {
         // Asigna el valor de acuerdo al "id" de la editorial.
+        // Para desplegar el nombre que le corresponde cuando se despliega en pantalla.
         $editoriales[$fila["id_editorial"]] =  $fila["editorial"];
       }
       $resultado->free();
@@ -159,7 +160,12 @@
               // Se agrega una funcion para extraer el nombre de la editorial en lugar del "id"
               $tabla .= "<td><h3>".$editorial[$fila['editorial']]."</h3></td>";
               $tabla .= "<td>Boton Editar</td>";
-              $tabla .= "<td>Boton Eliminar</td>";
+              // Modificacion para borrar registros 
+              $tabla .= "<td><a href='#' class='eliminar' data-id='".$fila['id_heroe']."'>Eliminar</a></td>";
+              // Se agrega "class" en lugar de "id" ya que se repiten y no puede ser único.
+              // Adicionalmente se agrega un atributo "data-id" para asignar el "id_heroe" y 
+              // poderlo hacer único.
+              // Por buenas prácticas no se puede empezar con número una id en CSS, javascrip, HTML.
             $tabla .= "</tr>";
           }
           // Libera espacio de memoria de la variable de la clase conexion.

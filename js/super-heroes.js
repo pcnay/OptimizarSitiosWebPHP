@@ -10,6 +10,13 @@ var precarga = document.querySelector("#precarga");
 // Es donde se colocara las respuesta por parte del Despachador Ajax
 var respuesta = document.querySelector("#respuesta");
 
+// Agregando una línea de código para borrar registro
+// Selecciona todos los renglones identificado por "class" que se generan en la tabla "Heroe"
+// Esta se encuentra en Vistas.php definida.
+//"querySelectorAll" va para clases y etiquetas (<p>,<li>,<ul>, etc.)
+// document.getElementByTagName, document.getElementByClassName realiza lo mismo.
+var btnsEliminar = document.querySelectorAll(".eliminar");
+
 // DECLARACION DE OBJETOS
 
 // DECLARACION DE FUNCIONES
@@ -30,7 +37,7 @@ function insertarHeroe(evento)
   // Si se inspecciona el objeto, en el apartado "target" se mostrara las etiquetas hijos
   // "Form", que este caso es "evento.target" que es el evento que lo origino. 
   //console.log(evento.target); // El evento que origina el objeto "Form"
-  //console.log(evento.target.length); // Las etiquetas hijos del "Form "
+  //console.log(evento.target.length); // Determina la longuitud de las etiquetas hijos del "Form "
   //console.log(evento.target[0]); // Muestra la primer etiqueta hija del formulario.
 // Ahora se obtendra la etiqueta y valor de los componentes hijos de "form".
 // Que esta información se obtuvo de "evento.target->target".
@@ -38,7 +45,7 @@ function insertarHeroe(evento)
     var nombre = new Array();
     var valor = new Array();
     var datos = "";
-    var hijosForm = evento.target;
+    var hijosForm = evento.target; // Contiene la etiqueta de "Form"
 
     // Se omite la etiqueta "field", por lo que se comienza en 1.
     for (var i=1;i<hijosForm.length;i++)
@@ -48,8 +55,7 @@ function insertarHeroe(evento)
       datos += nombre[i]+"="+valor[i]+"&";
       //console.log(datos);
     }
-
-  ejecutarAJAX(datos);
+  ejecutarAJAX(datos); // Se envia al Ajax para procesar la insercion de reg. a la tabla "Heores"
 }
 
 function enviarDatos()
@@ -71,9 +77,10 @@ function enviarDatos()
       // Ahora es indicar al DIV de respuesta que se encuentra en el archivo "index.php"
       // que se muestre el DIV y se le asigna el la "form" que se creo en el Ajax.
       respuesta.style.display = "block"; // Que se vea el "DIV" respuesta.
-      // Asigna el valor retornado por AJAX, es decir lo que retorna la funcion "capturaHeroe"
-      // del archivo "vistas.php"
-      respuesta.innerHTML = ajax.responseText; // Desplega la tabla.
+      // Asigna el valor retornado por AJAX, para este caso retorna la funcion "capturaHeroe"
+      // del archivo "vistas.php", esta depende desde donde se esta ejecutando.
+      respuesta.innerHTML = ajax.responseText; // Despliega el contendio de la ejecucion de 
+      // AJAX, en la DIV.
 
       
       // Se inicia con la definicion de las funciones CRUD  
@@ -85,10 +92,12 @@ function enviarDatos()
         // tiene por defecto los formularios cuando se oprimen el boton de "submit", pero
         // en esta ocacion se agrega a través de JavaScript.
         document.querySelector("#alta-heroe").addEventListener("submit",insertarHeroe);
+        // Es el id de la "Form" que se creo de forma dinámica.
       }
       // Una vez que haya insertado el registro
       // Tendrá que desplegar el mensaje esperar unos segundos y recarga la página.
       // Se tiene otra respuesta ya que se ejecuta de nuevo la funcion "ejecutarAJAX" 
+      // Lo utilizan la funcion de "Insertar" y "Eliminar" registros.
       if (ajax.responseText.indexOf("data-recargar")>-1)
       {
        // Espera 3 segundos antes de recargar la página.
@@ -96,7 +105,7 @@ function enviarDatos()
       } 
 
     }
-    else
+    else  // if ajax.status == 200
     {
       // "\n" porque en Alert no se puede agregar código HTML
       alert ("El servidor No contesto \n Error "+ajax.status+": "+ajax.statusText);      
@@ -150,9 +159,33 @@ function altaHeroe(evento)
   ejecutarAJAX(datos);
 }
 
+// Para eliminar los registros de la tabla "super Heroes"
+function eliminarHeroe(evento)
+{
+  // El evento que lo desencadena es <a> Enlace .
+  evento.preventDefault();
+  // "dataset" es para identificar el atributo definido en la etiqueta "<a>" data-id
+  // cuando se hace un click en la pantalla donde se muestran a los Super Heroes.
+  //alert(evento.target.dataset.id);
+
+  var idHeroe = evento.target.dataset.id;
+  var eliminar = confirm("Estas seguro de eliminar al Super Heroe con el id:"+idHeroe);
+  if (eliminar)
+  {
+    var datos = "idHeroe="+idHeroe+"&transaccion=eliminar";
+    ejecutarAJAX(datos);
+  }
+
+}
 function alCargarDocumento()
 {
-  btnInsertar.addEventListener("click",altaHeroe)
+  btnInsertar.addEventListener("click",altaHeroe);
+  // Agregando código para asignar un evento de escucha a todos los renglones de la tabla "Heroes"
+  // Para poder borrar.
+  for (var i=0;i<btnsEliminar.length;i++)
+  {
+    btnsEliminar[i].addEventListener("click",eliminarHeroe);
+  }
 }
 
 // DECLARACION DE ENVENTOS

@@ -44,6 +44,7 @@
     else if ($transaccion == "eliminar")
     {
       // Eliminar de MySQL el registro solicitado.
+      eliminarHeroe($_POST["idHeroe"]);
     }
     else if ($transaccion == "editar")
     {
@@ -55,6 +56,7 @@
     }
   }
 
-  ejecutarTransaccion($transaccion);
+  ejecutarTransaccion($transaccion); // Es necesaria esta función para que retorne informacion
+  // en el AJAX (responseText).
 
 ?>

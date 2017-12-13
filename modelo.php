@@ -18,6 +18,27 @@ function insertarHeroe($nombre,$imagen,$descripcion,$editorial)
   }
   $mysql->close();
 
-  return printf($respuesta);
+  return printf($respuesta); // Valor nuevo retornado para "ajax.responseText". 
+      // Para cuando lo lea la función "enviarDatos()" ejecute la siguiente condición.
+    
+}
+
+function eliminarHeroe($id)
+{
+  $sql = "DELETE FROM heroes WHERE id_heroe=$id";
+  $mysql = conexionMySQL();
+  if ($resultado=$mysql->query($sql)) // Si se ejecuto la consulta.
+  {
+    $respuesta = "<div class='exito' data-recargar>Se elimino con exito e reg. del super heroe con id: <b>$id</b></div>";
+  }
+  else
+  {
+    $respuesta = "<div class='error' >Ocurrio un error no se elimino el reg. del super heroe con id: <b>$id</b></div>";
+  }
+  $mysql->close();
+
+  return printf($respuesta); // Valor nuevo retornado para "ajax.responseText". 
+      // Para cuando lo lea la función "enviarDatos()" ejecute la siguiente condición.
+    
 }
 ?>
