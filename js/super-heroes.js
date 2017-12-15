@@ -17,6 +17,8 @@ var respuesta = document.querySelector("#respuesta");
 // document.getElementByTagName, document.getElementByClassName realiza lo mismo.
 var btnsEliminar = document.querySelectorAll(".eliminar");
 
+// El mismo concepto del anterior ahora para "Editar"
+var btnsEditar = document.querySelectorAll(".editar");
 // DECLARACION DE OBJETOS
 
 // DECLARACION DE FUNCIONES
@@ -25,7 +27,8 @@ var btnsEliminar = document.querySelectorAll(".eliminar");
 // En esta funcion se inicia a trabajar con la lógica de la aplicación.
 // Se ejecutaran las operaciones CRUD,
 
-function insertarHeroe(evento)
+// function insertarHeroe(evento)
+function insertarActualizarHeroe(evento)
 {
   evento.preventDefault();
   // alert("Procesa Formulario ");
@@ -91,9 +94,11 @@ function enviarDatos()
         // Es el nombre del formulario de captura. Para agregar la funcion de "submit" que
         // tiene por defecto los formularios cuando se oprimen el boton de "submit", pero
         // en esta ocacion se agrega a través de JavaScript.
-        document.querySelector("#alta-heroe").addEventListener("submit",insertarHeroe);
+        document.querySelector("#alta-heroe").addEventListener("submit",insertarActualizarHeroe);
         // Es el id de la "Form" que se creo de forma dinámica.
       }
+
+
       // Una vez que haya insertado el registro
       // Tendrá que desplegar el mensaje esperar unos segundos y recarga la página.
       // Se tiene otra respuesta ya que se ejecuta de nuevo la funcion "ejecutarAJAX" 
@@ -103,6 +108,16 @@ function enviarDatos()
        // Espera 3 segundos antes de recargar la página.
         setTimeout(function(){window.location.reload()},3000);
       } 
+      // Editar el registro para posteriormente grabarlo en la base de datos.
+      if (ajax.responseText.indexOf("data-editar")>-1)      
+      {
+        // Es el nombre del formulario de captura. Para agregar la funcion de "submit" que
+        // tiene por defecto los formularios cuando se oprimen el boton de "submit", pero
+        // en esta ocacion se agrega a través de JavaScript.
+        document.querySelector("#editar-heroe").addEventListener("submit",insertarActualizarHeroe);
+        // Es el id de la "Form" que se creo de forma dinámica.
+      }
+      
 
     }
     else  // if ajax.status == 200
@@ -159,6 +174,21 @@ function altaHeroe(evento)
   ejecutarAJAX(datos);
 }
 
+// Para editar los registros de la tabla "super Heroes"
+function editarHeroe(evento)
+{
+  // El evento que lo desencadena es <a> Enlace .
+  evento.preventDefault();
+  // "dataset" es para identificar el atributo definido en la etiqueta "<a>" data-id
+  // cuando se hace un click en la pantalla donde se muestran a los Super Heroes.
+  // alert(evento.target.dataset.id);
+  var idHeroe = evento.target.dataset.id;
+  var datos = "idHeroe="+idHeroe+"&transaccion=editar";
+  ejecutarAJAX(datos); // Interactua con el Backend.
+
+
+}
+
 // Para eliminar los registros de la tabla "super Heroes"
 function eliminarHeroe(evento)
 {
@@ -186,6 +216,13 @@ function alCargarDocumento()
   {
     btnsEliminar[i].addEventListener("click",eliminarHeroe);
   }
+
+  // Agregando evento de escucha "onclick" para editar.
+  for (var i=0;i<btnsEditar.length;i++)
+  {
+    btnsEditar[i].addEventListener("click",editarHeroe);
+  }
+
 }
 
 // DECLARACION DE ENVENTOS

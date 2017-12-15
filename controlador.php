@@ -49,11 +49,20 @@
     else if ($transaccion == "editar")
     {
       // Traer los datos del reg. a modificar en un formulario.
+      editarHeroe($_POST["idHeroe"]);
     }
     else if ($transaccion == "actualizar")
     {
-      // Modificar en MySQL los datos del regisro modificado.
+      // Modificar en MySQL los datos del regisro modificado. Esta se define en "modelo.php"
+      actualizarHeroe(
+        $_POST["idHeroe"],
+        $_POST["nombre_txt"],
+        $_POST["imagen_txt"],
+        $_POST["descripcion_txa"],
+        $_POST["editorial_slc"]);
+
     }
+
   }
 
   ejecutarTransaccion($transaccion); // Es necesaria esta función para que retorne informacion

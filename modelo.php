@@ -38,7 +38,29 @@ function eliminarHeroe($id)
   $mysql->close();
 
   return printf($respuesta); // Valor nuevo retornado para "ajax.responseText". 
+      // Para cuando lo lea la función "enviarDatos()" ejecute la siguiente condición.    
+}
+
+function actualizarHeroe($id,$nombre,$imagen,$descripcion,$editorial)
+{
+  // Tabla "heroe" con sus respectivos campos
+  // Si se coloca "0" en VALUES, MySQL automaticamente agrega el que sigue del número 
+  // del id que esta en la tabla 
+  $sql = "UPDATE heroes SET nombre='$nombre',imagen='$imagen',descripcion='$descripcion',editorial=$editorial WHERE id_heroe=$id";
+  $mysql = conexionMySQL();
+  if ($resultado=$mysql->query($sql)) // Si se ejecuto la consulta.
+  {
+    $respuesta = "<div class='exito' data-recargar>Se actualizo con  éxito el registro del SuperHeroe <b>$nombre</b></div>";
+  }
+  else
+  {
+    $respuesta = "<div class='error' >Ocurrio un error NO se actualizo el registro del SuperHeroe <b>$nombre</b></div>";
+  }
+  $mysql->close();
+
+  return printf($respuesta); // Valor nuevo retornado para "ajax.responseText". 
       // Para cuando lo lea la función "enviarDatos()" ejecute la siguiente condición.
     
 }
+
 ?>
