@@ -124,3 +124,28 @@ img
 {
   background:#1C5F81;
 }
+
+/* Agregando codigo para la seccion de codigo de paginacion. 
+  Para los encore, enlaces que se encuentran en el DIV *paginacion*, archivo "vistas.php" 
+*/
+.paginacion a, .actual
+{
+  color:#EC673A; /* Color Anaranjado */
+  font-weight:bold;
+  font-size:1.5rem;
+  padding:0 .5rem;
+  text-decoration:none;
+  vertical-align:middle; /* Se centran tomando de base los numeros que exitan. */
+}
+
+.paginacion a:hover, .actual 
+{
+  color:#1C5F81 /* Color Azul */
+}
+
+/* Agrandando la fuente en la pagina Actual*/
+.actual
+{
+  font-size: 3rem;
+}
+

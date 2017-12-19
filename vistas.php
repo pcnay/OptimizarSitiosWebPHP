@@ -118,13 +118,74 @@
     if($resultado=$mysql->query($sql))
     { 
       // Determina si hay registros en la tabla de SuperHeroes  
-      if (mysqli_num_rows($resultado)==0)
+      $totalRegistros = mysqli_num_rows($resultado);
+
+      if ($totalRegistros==0)
       {
         $respuesta ="<div class='error'>No existen registros de SuperHeroes </div>";
       }
       else
       {
+        //Inicia la Paginacion.
+        //1.- Limitar la consulta   
+                $regXPag = 3; // Cuantos mostrar por página.        
+                $pagina = false; // Cuando entra el usuario a la pagina  
+                // Examinar la página a mostrar y el inicio del reg. a mostrar.        
+                if (isset($_GET["p"]))        
+                {        
+                  $pagina = $_GET["p"];        
+                }         
+                if (!$pagina)
+                {
+                  $inicio = 0;
+                  $pagina = 1; 
+                }
+                else // Moviendo a la pagina 2,3,4,...
+                {
+                  $inicio=($pagina-1)*$regXPag;
+                }       
 
+                // Calcular el total de páginas.
+                $totalPaginas = ceil($totalRegistros/$regXPag); // sube valor fraccionario al sig. entero
+               
+                // Redifinir la consulta para que muestre solo los resultados.
+                $sql .= " LIMIT ".$inicio.",".$regXPag;
+                $resultado=$mysql->query($sql);
+        
+                //Escribiendo el codigo para mostrar los numeros de la paginacion.
+                $paginacion = "<div class='paginacion'>";
+                  $paginacion .= "<p>";
+                    $paginacion .="Número de resultados : <b>$totalRegistros</b>"; 
+                    $paginacion .= "Mostrando <b>$regXPag</b> resultados por página";
+                    $paginacion .= "Página <b>$pagina</b> de <b>$totalPaginas</b>";
+                  $paginacion .= "</p>";
+                  if ($totalPaginas>1)
+                  {
+                    $paginacion .= "<p>";
+                    // Para habilitar el boton de ir a al Izq.                      
+                      $paginacion .= ($pagina !=1)?"<a href='?p=".($pagina-1)."'>&laquo</a>":""; // Despliega símbolo flechas izq.
+                      // Generando los números de las páginas.
+                      for ($i=1;$i<=$totalPaginas;$i++)
+                      {
+                        // Modificando para cuando se encuentre en la página actual y se selecciona de 
+                        // nuevo no se recarga de nuevo, es decir se oprime 4 y se vuelve a oprimir 4
+                        // no se recarga nuevamente.
+                        // Si muestro el indice de la pagina actual, no se coloca enlace
+                        $actual = "<span class='actual'>$pagina</span>";
+                        // Si el indice no corresponde con la pagina mostrada actualmente, coloco
+                        // el enlace para ir a esa pagina.
+                        $enlace = "<a href='?p=$i'>$i</a>";// Despliega los números de página.
+                        $paginacion .= ($pagina == $i)?$actual:$enlace;// "<a href='?p=$i'>$i</a>"; 
+                      }
+                      // Para habilitar el boton de ir a la Der.                                            
+                      $paginacion .= ($pagina != $totalPaginas)?"<a href='?p=".($pagina+1)."'>&raquo</a>":"";// Despliega símbolo flechas derecha                    $paginacion .= "</p>";
+                  } 
+                $paginacion .= "</div>";
+                
+                //  echo $sql."<br/>".$totalPaginas;            
+        
+                // ************* Termina la paginacion.
+        
         // Se creara una tabla de forma dinámica, donde muetra la información del SuperHeroe.
         $tabla = "<table id='tabla-heroes' class='tabla'>";
         // Definiendo la cabecera de la tabla.
@@ -178,7 +239,7 @@
         $tabla .= "</table>";
 
         // Se asigna la tabla creada dinámicamente para que la función la retorne.
-        $respuesta = $tabla;
+        $respuesta = $tabla.$paginacion;
 
       }
     }
