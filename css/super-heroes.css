@@ -1,0 +1,151 @@
+@import url("normalize.css");
+body,html
+{
+  background:rgb(136, 132, 132);
+  font-family:Helvetica, Arial;
+  font-size:16px;
+  text-align:center; /* Centrando toda la página. */
+}
+
+img
+{
+  max-width:100%;
+}
+
+#cabecera, #contenido
+{
+  display: inline-block; /* Para que compartan espacio */
+  vertical-align: top; /* Se alinean en la parte de arriba */
+  width: 15%;
+}
+
+/*
+#cabecera, #contenido, #precarga, #respuesta, .tabla td, tabla th
+{
+  padding:1em;
+}
+*/
+
+
+#contenido
+{
+  background:white;
+  width: 80%;
+}
+
+/* Aplicando estilos al boton "insertar" */
+#insertar
+{
+  color:#292623;
+  font-size:1.5em;
+}
+#insertar:hover
+{
+  color:#EC673A;
+}
+
+/* Se Definio como clase en "vistas.php" */
+.error, .exito 
+{
+  background:red;
+  color:white;
+  padding:1em;
+}
+.exito
+{
+  background:green;
+}
+
+#precarga, #respuesta 
+{
+  display:none;
+}
+
+/* Definiendo los estilos del formulario para la inserción de registros. */ 
+
+
+.formulario, .tabla p
+{
+  text-align:left;
+}
+
+.formulario div
+{
+  margin: 1em auto;
+}
+
+.formulario legend
+{
+  font-size:2em;
+  font-weight:bold;
+}
+
+
+.tabla
+{
+  margin:auto;
+  width:90%;
+}
+
+
+.tabla a
+{
+  color:#EEE; 
+}
+
+.tabla a:hover
+{
+  color:#292623;
+}
+
+.tabla img
+{
+  max-width:200px;
+}
+
+.tabla td
+{
+  vertical-align:top;
+}
+
+/* Encabezados de la s tablas */
+.tabla th
+{
+  background:#292623; /*Color Negro */
+  color:#EEE;  /* Color Blanco */
+}
+
+.tabla tr:nth-child(odd)
+{
+  background:#EC673A;
+}
+
+.tabla tr:nth-child(even)
+{
+  background:#1C5F81;
+}
+
+/* Agregando codigo para la seccion de codigo de paginacion. 
+  Para los encore, enlaces que se encuentran en el DIV *paginacion*, archivo "vistas.php" 
+*/
+.paginacion a, .actual
+{
+  color:#EC673A; /* Color Anaranjado */
+  font-weight:bold;
+  font-size:1.5rem;
+  padding:0 .5rem;
+  text-decoration:none;
+  vertical-align:middle; /* Se centran tomando de base los numeros que exitan. */
+}
+
+.paginacion a:hover, .actual 
+{
+  color:#1C5F81 /* Color Azul */
+}
+
+/* Agrandando la fuente en la pagina Actual*/
+.actual
+{
+  font-size: 3rem;
+}
+
